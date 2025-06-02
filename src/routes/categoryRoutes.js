@@ -1,6 +1,6 @@
 const CategoryController = require('../controllers/categoryController');
 
-app.post('/api/categories', categoryController.createCategory);
+app.post('/api/categories', CategoryController.createCategory);
 app.get('/api/categories', CategoryController.listCategories);
 app.get('/api/categories/:id', CategoryController.findById);
 app.put('/api/categories/:id', CategoryController.updateCategory);
