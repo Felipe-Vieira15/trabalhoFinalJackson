@@ -1,4 +1,4 @@
-const database = require('../database');
+const database = require('./config/database');
 const express = require('express');
 
 console.log('Starting server....')

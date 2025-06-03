@@ -1,4 +1,4 @@
-
+const { Order, User, products } = require('../models');
 
 class OrderController {
     async createOrder(req, res) {

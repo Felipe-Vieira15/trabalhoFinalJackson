@@ -1,6 +1,6 @@
-const database = require('../database');
+const database = require('./config/database');
 const User = require('./User');
-const Product = require('./product');
+const Product = require('./Product');
 
 class Order {
     constructor() {

@@ -1,22 +1,6 @@
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-
-const saltRounds = 10;
-const JWT_SECRET_KEY = "lipeeesz";
+const User = require('../models/User');
 
 class UserController {
-    async createUser(req, res) {
-        const name = req.body.name;
-        const email = req.body.email;
-        const password = req.body.password;
-
-        try {
-            const user = await createUser(name, email, password);
-            return res.status(201).send({ success: true, user });
-        } catch (error) {
-            return res.status(400).send({ error: error.message });
-        }
-    }
 
     async listUsers(req, res) {
         try {

@@ -1,4 +1,4 @@
-
+const { Product, Category } = require('../models');
 
 class ProductController {
     async createProduct(req, res) {

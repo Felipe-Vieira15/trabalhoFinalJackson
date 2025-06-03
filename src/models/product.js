@@ -1,5 +1,5 @@
-const database = require('../database');
-const Category = require('./category');
+const database = require('./config/database');
+const Category = require('./Category');
 
 class Product {
     constructor() {
