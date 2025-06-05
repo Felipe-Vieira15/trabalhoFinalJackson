@@ -1,12 +1,12 @@
-const database = require('./config/database');
-const User = require('./User');
-const Product = require('./Product');
+const database = require('../config/database');
+const User = require('./user');
+const Product = require('./product');
 
 class Order {
     constructor() {
         this.model = database.db.define('orders', {
             id: {
-                type: database.Sequelize.INTEGER,
+                type: database.db.Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             }

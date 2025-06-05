@@ -1,4 +1,8 @@
 const database = require('./config/database');
+const User = require('./models/user');
+const Category = require('./models/category');
+const Product = require('./models/product');
+const Order = require('./models/order');
 const express = require('express');
 
 console.log('Starting server....')

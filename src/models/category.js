@@ -1,15 +1,15 @@
-const database = require('./config/database');
+const database = require('../config/database');
 
 class Category {
     constructor() {
         this.model = database.db.define('categories', {
             id: {
-                type: database.Sequelize.INTEGER,
+                type: database.db.Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
             name: {
-                type: database.Sequelize.STRING,
+                type: database.db.Sequelize.STRING,
             }
         });
     }

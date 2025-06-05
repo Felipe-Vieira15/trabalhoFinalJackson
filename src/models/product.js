@@ -1,19 +1,19 @@
-const database = require('./config/database');
-const Category = require('./Category');
+const database = require('../config/database');
+const Category = require('./category');
 
 class Product {
     constructor() {
         this.model = database.db.define('products', {
             id: {
-                type: database.Sequelize.INTEGER,
+                type: database.db.Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
             },
             name: {
-                type: database.Sequelize.STRING,
+                type: database.db.Sequelize.STRING,
             },
             price: {
-                type: database.Sequelize.NUMBER,
+                type: database.db.Sequelize.DECIMAL,
             }
         });
         this.model.belongsTo(Category, { foreignKey: 'category_id' });
