@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
 class RegisterUser{
-    static async register(req, res) {
+    async register(req, res) {
         try {
             const { name, email, password } = req.body;
             const hash = await bcrypt.hash(password, saltRounds);
@@ -19,4 +19,4 @@ class RegisterUser{
     }
 }
 
-module.exports = RegisterUser;
+module.exports = new RegisterUser;

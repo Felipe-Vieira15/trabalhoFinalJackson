@@ -1,7 +1,10 @@
+const express = require('express');
+const router = express.Router();
 const UserController = require('../controllers/userControllers');
 
-app.post('/api/users', UserController.createUser);
-app.get('/api/users', UserController.listUsers);
-app.get('/api/users/:id', UserController.findById);
-app.put('/api/users/:id', UserController.updateUser);
-app.delete('/api/users/:id', UserController.deleteUser);
+router.get('/', UserController.listUsers);
+router.get('/:id', UserController.findById);
+router.put('/:id', UserController.updateUser);
+router.delete('/:id', UserController.deleteUser);
+
+module.exports = router;

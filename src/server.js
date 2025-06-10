@@ -1,21 +1,26 @@
 const database = require('./config/database');
-const User = require('./models/user');
-const Category = require('./models/category');
-const Product = require('./models/product');
-const Order = require('./models/order');
+const UserRoutes = require('./routes/userRoutes');
+const CategoryRoutes = require('./routes/categoryRoutes');
+const ProductRoutes = require('./routes/productRoutes');
+const OrderRoutes = require('./routes/orderRoutes');
+const MiddlewaresRoutes = require('./routes/middlewaresRoutes');
 const express = require('express');
+const router = express();
 
 console.log('Starting server....')
-const app = express()
-app.use(express.json())
 
-app.get('/', (req, res) => {
+router.get('/', (req, res) => {
     res.send({ response: 'Starting page!' });
 })
 
+router.use('/api/users', UserRoutes, MiddlewaresRoutes);
+router.use('/api/categories', CategoryRoutes);
+router.use('/api/products', ProductRoutes);
+router.use('/api/orders', OrderRoutes);
+
 database.db.sync({ force: false })
     .then(() => {
-        app.listen(3000, () => {
+        router.listen(3000, () => {
             console.log('Server is running on port 3000')
         })
     })
