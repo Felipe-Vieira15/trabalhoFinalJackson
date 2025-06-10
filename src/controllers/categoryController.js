@@ -5,7 +5,7 @@ class CategoryController {
         const name = req.body.name;
 
         try {
-            const category = await createCategory(name);
+            const category = await Category.create({ name });
             return res.status(201).send({ success: true, category });
         } catch (error) {
             return res.status(400).send({ error: error.message });
@@ -14,7 +14,7 @@ class CategoryController {
 
     async listCategories(req, res) {
         try {
-            const categories = await listCategories();
+            const categories = await Category.findAll();
             return res.status(200).send(categories);
         } catch (error) {
             return res.status(400).send({ error: error.message });
@@ -37,7 +37,14 @@ class CategoryController {
         const { name } = req.body;
 
         try {
-            const category = await updateCategory(Number(id), name);
+            const category = await Category.update(
+                { name },
+                {
+                    where: {
+                        id: Number(id)
+                    }
+                }
+            );
             return res.status(200).send(category);
         } catch (error) {
             return res.status(400).send({ error: error.message });
@@ -48,7 +55,11 @@ class CategoryController {
         const id = req.params;
 
         try {
-            await deleteCategory(Number(id));
+            await Category.destroy({
+                where: {
+                    id: Number(id)
+                }
+            });
             return res.status(200).send({ success: true, message: 'Categoria Deletada' });
         } catch (error) {
             return res.status(400).send({ error: error.message });

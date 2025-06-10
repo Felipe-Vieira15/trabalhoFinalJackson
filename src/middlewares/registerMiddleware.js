@@ -1,15 +1,20 @@
-const User = require('../models/user');
+const User = require('../models/user')
 const bcrypt = require('bcrypt');
 
 const saltRounds = 10;
 
 class RegisterUser{
     async register(req, res) {
+        const name = req.body.name;
+        const email = req.body.email;
+        const password = req.body.password;
+        const hash = await bcrypt.hash(password, saltRounds);
         try {
-            const { name, email, password } = req.body;
-            const hash = await bcrypt.hash(password, saltRounds);
-
-            const User = User.create({ name, email, password: hash})
+            const User = await User.create({
+                name,
+                email,
+                password: hash
+            });
 
             res.status(201).send({message: "Usuario cadastrado com sucesso", User});
         } catch (error) {

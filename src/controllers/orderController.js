@@ -1,4 +1,6 @@
-const { Order, User, products } = require('../models');
+const Order = require('../models/order');
+const Product = require('../models/product');
+const User = require('../models/user');
 
 class OrderController {
     async createOrder(req, res) {
@@ -6,7 +8,10 @@ class OrderController {
         const productId = req.body.productId;
 
         try {
-            const order = await createOrder(userId, productId);
+            const order = await Order.create({
+                userId,
+                productId
+            });
             return res.status(201).send({ success: true, order });
         } catch (error) {
             return res.status(400).send({ error: error.message });
@@ -15,7 +20,7 @@ class OrderController {
 
     async listOrders(req, res) {
         try {
-            const orders = await listOrders();
+            const orders = await Order.findAll();
             return res.status(200).send(orders);
         } catch (error) {
             return res.status(400).send({ error: error.message });
@@ -38,7 +43,14 @@ class OrderController {
         const { userId, productId } = req.body;
 
         try {
-            const order = await updateOrder(Number(id), userId, productId);
+            const order = await Order.update(
+                { userId, productId },
+                {
+                    where: {
+                        id: Number(id)
+                    }
+                }
+            );
             return res.status(200).send(order);
         } catch (error) {
             return res.status(400).send({ error: error.message });
@@ -49,7 +61,11 @@ class OrderController {
         const id = req.params.id;
 
         try {
-            await deleteOrder(Number(id));
+            await Order.destroy({
+                where: {
+                    id: Number(id)
+                }
+            });
             return res.status(200).send({ success: true, message: 'Order Deleted' });
         } catch (error) {
             return res.status(400).send({ error: error.message });
