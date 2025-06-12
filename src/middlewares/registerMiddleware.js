@@ -10,13 +10,13 @@ class RegisterUser{
         const password = req.body.password;
         const hash = await bcrypt.hash(password, saltRounds);
         try {
-            const User = await User.create({
+            const newUser = await User.create({
                 name,
                 email,
                 password: hash
             });
 
-            res.status(201).send({message: "Usuario cadastrado com sucesso", User});
+            res.status(201).send({message: "Usuario cadastrado com sucesso", newUser});
         } catch (error) {
             console.error(error);
             res.status(500).send({ error: 'Erro ao cadastrar usuário', error: error.message });
