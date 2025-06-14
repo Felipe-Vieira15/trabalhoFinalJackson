@@ -1,5 +1,8 @@
 const User = require('../models/user')
 const bcrypt = require('bcrypt');
+const MissingValues = require('../middlewares/missing-values');
+const EmailValidate = require('../middlewares/email-validate');
+const Conflict = require('../middlewares/conflict');
 
 const saltRounds = 10;
 
@@ -15,6 +18,19 @@ class RegisterUser{
                 email,
                 password: hash,
             });
+
+            if (!name || !email || !password) {
+                throw new MissingValues({ name, email, password }, 'Todos os campos são obrigatórios.');
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                throw new EmailValidate(email);
+            }
+
+            const existingUser = await User.findOne({ where: { email } });
+            if (existingUser) {
+                throw new Conflict('Já exite um Usuário cadastrado com este email.');
+            }
 
             res.status(201).send({message: "Usuario cadastrado com sucesso", newUser});
         } catch (error) {

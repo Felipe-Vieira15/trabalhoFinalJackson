@@ -2,21 +2,24 @@ require('dotenv').config();
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const MissingValues = require('../middlewares/missing-values');
+const NotFound = require('../middlewares/not-found');
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 class LoginMiddleware {
     async login(req, res, next) {
         try {
-            const { email, password } = req.body;
+            const email = req.body.email;
+            const password = req.body.password;
     
             if (!email || !password) {
-                return res.status(400).send({ error: 'Email e senha necessários para realizar login' });
+                return MissingValues({ email, password }, 'Email e senha são obrigatórios.');
             }
 
             const user = await User.findOne({ where: { email } });
 
             if (!user) {
-                return res.status(404).send({ error: 'Usuario não encontrado' });
+                return NotFound(`Usuário com email ${email} não encontrado.`);
             }
 
             const correctPassword = await bcrypt.compare(password, user.password);
