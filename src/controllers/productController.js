@@ -16,7 +16,7 @@ class ProductController {
         }
     }
 
-    async listProducts(req, res) {
+    async listAll(req, res) {
         try {
             const products = await Product.findAll();
             return res.status(200).send(products);

@@ -1,24 +1,31 @@
+require('dotenv').config();
 const jwt = require('jsonwebtoken');
-const { JWT_SECRET_KEY } = require('../config/config');
+const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 
 class AuthMiddleware {
-
     static validateToken(req, res, next) {
-        const token = req.headers.authorization;
+        const authHeader = req.headers['authorization'];
+        const token = authHeader && authHeader.split(' ')[1];
 
         if (!token) {
-            return res.status(401).send({ error: 'Token não fornecido' });
+            return res.status(401).json({ message: 'Acesso negado: Token não fornecido' });
         }
 
         try {
-            const verify = jwt.verify(token, JWT_SECRET_KEY);
-            req.user = verify;
+            const decoded = jwt.verify(token, JWT_SECRET_KEY);
+            req.user = decoded;
             next();
         } catch (error) {
-            return res.status(403).send({ error: 'Token inválido' });
-        };
+            if (error.name === 'TokenExpiredError') {
+                return res.status(401).json({ message: 'Acesso negado: Token expirado' });
+            }
+            if (error.name === 'JsonWebTokenError') {
+                return res.status(401).json({ message: 'Acesso negado: Token inválido' });
+            }
+            console.error('Erro de autenticação:', error);
+            return res.status(500).json({ message: 'Erro interno do servidor' });
+        }
     }
-
 }
 
 module.exports = AuthMiddleware;

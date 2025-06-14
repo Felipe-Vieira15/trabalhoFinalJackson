@@ -18,7 +18,7 @@ class OrderController {
         }
     }
 
-    async listOrders(req, res) {
+    async listAll(req, res) {
         try {
             const orders = await Order.findAll();
             return res.status(200).send(orders);

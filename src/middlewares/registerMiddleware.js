@@ -13,7 +13,7 @@ class RegisterUser{
             const newUser = await User.create({
                 name,
                 email,
-                password: hash
+                password: hash,
             });
 
             res.status(201).send({message: "Usuario cadastrado com sucesso", newUser});

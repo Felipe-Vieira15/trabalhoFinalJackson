@@ -2,7 +2,7 @@ const User = require('../models/user');
 
 class UserController {
 
-    async listUsers(req, res) {
+    async listAll(req, res) {
         try {
             const users = await User.findAll();
             return res.status(200).send( users );
@@ -10,6 +10,8 @@ class UserController {
             return res.status(400).send({ error: error.message });
         }
     }
+
+
 
     async findById(req, res) {
         const id = req.params.id;

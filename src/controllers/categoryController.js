@@ -12,7 +12,7 @@ class CategoryController {
         }
     }
 
-    async listCategories(req, res) {
+    async listAll(req, res) {
         try {
             const categories = await Category.findAll();
             return res.status(200).send(categories);
