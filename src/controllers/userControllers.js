@@ -12,7 +12,8 @@ class UserController {
     async listAll(req, res) {
         try {
             const users = await User.findAll();
-            return res.status(200).send( users );
+
+            return res.status(200).send(users);
         } catch (error) {
             return res.status(400).send({ error: error.message });
         }

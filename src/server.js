@@ -15,7 +15,8 @@ const PORT = process.env.PORT || 3000;
 database.db.sync({ force: false })
     .then(() => {
         router.listen(PORT, () => {
-            console.log(`Server is running on port ${PORT}`);
+            console.log(`Server is running in http://localhost:${PORT}/`);
+            console.log(`Swagger documentation running in http://localhost:${PORT}/api/docs`);
         })
     })
     .catch((error) => {
