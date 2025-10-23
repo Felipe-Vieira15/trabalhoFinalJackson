@@ -1,6 +1,6 @@
 name: SecurityPipeline
 
-on: [push]
+on: [main]
 
 jobs:
   horusec-security:
